@@ -12,3 +12,6 @@ def drop_closed_store_rows(df):
 
 def get_fake_test(df):
     return df.loc[((df['D_Month'] == 1) | (df['D_Month'] == 2)) & (df['D_Year'] == 2018)]
+
+def get_fake_train(df):
+    return df.loc[((df['D_Month'] != 1) & (df['D_Month'] != 2)) | (df['D_Year'] != 2018)]
