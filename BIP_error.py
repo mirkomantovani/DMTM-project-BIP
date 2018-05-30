@@ -7,7 +7,6 @@ def get_BIP_error(df):
 	:return: flaot Percentage of error
 	"""
 	error_evaluation_columns = [
-		'StoreID',
 		'D_Month',
 		'Region',
 		'NumberOfSales',
