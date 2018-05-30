@@ -18,7 +18,7 @@ def get_BIP_error(df):
 	df = df[error_evaluation_columns]
 
 	# let's keep only march and april
-	df = df.loc[df['D_Month'].isin([3, 4])]
+	# df = df.loc[df['D_Month'].isin([3, 4])] No. let's just evaluate months provided
 
 	# compute the difference between actual and predicted NumberOfSales and do the abs
 	df['abs_diff'] = df.apply(
