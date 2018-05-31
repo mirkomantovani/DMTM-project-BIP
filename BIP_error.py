@@ -1,4 +1,3 @@
-
 def get_BIP_error(df):
 	"""
 	Error on the predictions made. It's based on the BIP provided formula.
@@ -6,12 +5,15 @@ def get_BIP_error(df):
 	:param df: Data frame
 	:return: flaot Percentage of error
 	"""
-	error_evaluation_columns = ['StoreID', 'D_Month', 'Region', 'NumberOfSales', '_NumberOfSales']
+	error_evaluation_columns = ['StoreID', 'D_Month', 'IsOpen', 'Region', 'NumberOfSales', '_NumberOfSales']
 
 	# Remove useless columns and select all those required.
 	# Implicit check that all the required attributes to compute the error are
 	# present.
 	df = df[error_evaluation_columns]
+
+	# let's consider only rows for which the store is open
+	df = df[df.IsOpen == 1]
 
 	# let's keep only march and april
 	# df = df.loc[df['D_Month'].isin([3, 4])] No. let's just evaluate months provided
