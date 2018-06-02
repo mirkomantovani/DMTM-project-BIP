@@ -32,10 +32,10 @@ def get_fake_train3(df):
 
 # Testing on January and February 2017 instead
 def get_fake_test4(df):
-    return df.loc[((df['D_Month'] == 3) | (df['D_Month'] == 4)) & (df['D_Year'] == 2017)]
+    return df.loc[((df['D_Month'] == 1) | (df['D_Month'] == 2)) & (df['D_Year'] == 2017)]
 
 def get_fake_train4(df):
-    return df.loc[((df['D_Month'] != 3) & (df['D_Month'] != 4)) | (df['D_Year'] != 2017)]
+    return df.loc[((df['D_Month'] != 1) & (df['D_Month'] != 2)) | (df['D_Year'] != 2017)]
 
 # Testing on April and May 2017 instead
 def get_fake_test5(df):
