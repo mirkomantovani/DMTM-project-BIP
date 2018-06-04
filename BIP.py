@@ -44,3 +44,26 @@ def get_BIP_error(df):
 	print("BIP total error: {}".format(BIP_total_error))
 
 	return BIP_total_error
+
+
+def apply_BIP_submission_structure(df):
+	"""
+	Given a dataframe with predictions, it returns a dataframe which structure matches the one to be delivered.
+
+	:param df: Data frame
+	:return: Dataframe with correct structure.
+	"""
+    sub_features = ['StoreID', 'D_Month', '_NumberOfSales']
+
+    # Remove useless columns and select all those required.
+	# Implicit check that all the required attributes to compute the error are
+	# present.
+	df = df[sub_features]
+
+	# let's sum NumberOfSales by the store and month
+    df = df.groupby(['StoreID', 'D_Month']).sum()
+
+    # name conversion from our standard to BIP submission requirements
+    df.rename(index=str, columns={"D_Month": "Month", "_NumberOfSales": "NumberOfSales"}, inplace=True)
+
+	return df
