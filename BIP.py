@@ -6,7 +6,7 @@ def get_BIP_error(df):
 	:return: flaot Percentage of error
 	"""
 	error_evaluation_columns = ['StoreID', 'D_Month', 'Region', 'NumberOfSales', '_NumberOfSales']
-    
+
 
 
 	# Remove useless columns and select all those required.
@@ -69,5 +69,36 @@ def apply_BIP_submission_structure(df):
 	df.rename(index=str,
 	          columns={"D_Month": "Month", "_NumberOfSales": "NumberOfSales"},
 	          inplace=True)
+
+	# to make the dataframe consistent again
+	df.reset_index(inplace=True)
+
+	return df
+
+
+def apply_BIP_submission_structure_keep_actual(df):
+	"""
+	Given a dataframe with predictions, it returns a dataframe which structure matches the one to be delivered.
+
+	:param df: Data frame
+	:return: Dataframe with correct structure.
+	"""
+	sub_features = ['StoreID', 'D_Month', 'NumberOfSales', '_NumberOfSales']
+
+	# Remove useless columns and select all those required.
+	# Implicit check that all the required attributes to compute the error are
+	# present
+	df = df[sub_features]
+
+	# let's sum NumberOfSales by the store and month
+	df = df.groupby(['StoreID', 'D_Month']).sum()
+
+	# name conversion from our standard to BIP submission requirements
+	df.rename(index=str,
+	          columns={"D_Month": "Month"},
+	          inplace=True)
+
+	# to make the dataframe consistent again
+	df.reset_index(inplace=True)
 
 	return df
