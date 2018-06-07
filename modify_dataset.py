@@ -9,37 +9,10 @@ def drop_closed_store_rows(df):
     df = df.drop(df[df.IsOpen == 0].index)
     return df
 
-# Testing on January and February 2018 
-def get_fake_test(df):
-    return df.loc[((df['D_Month'] == 1) | (df['D_Month'] == 2)) & (df['D_Year'] == 2018)]
+# Get a fake test dataframe based on the months and the year to be used as test
+def get_fake_test(df, test_months=(1, 2), test_year=2018):
+    return df.loc[((df['D_Month'] == test_months[0]) | (df['D_Month'] == test_months[1])) & (df['D_Year'] == test_year)]
 
-def get_fake_train(df):
-    return df.loc[((df['D_Month'] != 1) & (df['D_Month'] != 2)) | (df['D_Year'] != 2018)]
-
-# Testing on March and April 2017 instead
-def get_fake_test2(df):
-    return df.loc[((df['D_Month'] == 3) | (df['D_Month'] == 4)) & (df['D_Year'] == 2017)]
-
-def get_fake_train2(df):
-    return df.loc[((df['D_Month'] != 3) & (df['D_Month'] != 4)) | (df['D_Year'] != 2017)]
-
-# Testing on March and April 2016 instead
-def get_fake_test3(df):
-    return df.loc[((df['D_Month'] == 3) | (df['D_Month'] == 4)) & (df['D_Year'] == 2016)]
-
-def get_fake_train3(df):
-    return df.loc[((df['D_Month'] != 3) & (df['D_Month'] != 4)) | (df['D_Year'] != 2016)]
-
-# Testing on January and February 2017 instead
-def get_fake_test4(df):
-    return df.loc[((df['D_Month'] == 1) | (df['D_Month'] == 2)) & (df['D_Year'] == 2017)]
-
-def get_fake_train4(df):
-    return df.loc[((df['D_Month'] != 1) & (df['D_Month'] != 2)) | (df['D_Year'] != 2017)]
-
-# Testing on April and May 2017 instead
-def get_fake_test5(df):
-    return df.loc[((df['D_Month'] == 4) | (df['D_Month'] == 5)) & (df['D_Year'] == 2017)]
-
-def get_fake_train5(df):
-    return df.loc[((df['D_Month'] != 4) & (df['D_Month'] != 5)) | (df['D_Year'] != 2017)]
+# Get a fake train dataframe based on the months and the year to be used as test
+def get_fake_train(df, test_months=(1, 2), test_year=2018):
+    return df.loc[((df['D_Month'] != test_months[0]) & (df['D_Month'] != test_months[1])) | (df['D_Year'] != test_year)]
