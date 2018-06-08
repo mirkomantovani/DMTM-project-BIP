@@ -49,7 +49,7 @@ def apply_BIP_submission_format(df, real_submit=False):
     return df
 
 
-def get_BIP_error(df):
+def get_BIP_error(df, already_BIP_format=False):
     """
     It's based on the BIP provided formula.
     Given a dataframe with predictions, **NOT yet summed by month** it return the total error
@@ -59,19 +59,11 @@ def get_BIP_error(df):
         ['StoreID', 'D_Month', 'NumberOfSales', '_NumberOfSales']
 
     :param df: The data frame
+    :param already_BIP_format: If the given dataframe is already into the BIP format.
     :return: Dataframe in the submit format.
     """
     import pandas as pd
     import numpy as np
-
-    required_attributes = ['StoreID', 'D_Month', 'NumberOfSales', '_NumberOfSales']
-
-    # create a copy of the dataframe to do not change the provided one
-    df = df.copy()
-
-    # Remove useless columns and select all the ones required.
-    # Implicit check that all the required columns are present.
-    df = df[required_attributes]
 
     def get_regions():
         # starting from the train set, get a dataframe which link the stores to their region
@@ -95,7 +87,19 @@ def get_BIP_error(df):
                 regional_error))
         return score
 
-    result = apply_BIP_submission_format(df)
+    required_attributes = ['StoreID', 'D_Month', 'NumberOfSales', '_NumberOfSales']
+
+    # create a copy of the dataframe to do not change the provided one
+    df = df.copy()
+
+    if already_BIP_format:
+        result = df[['StoreID','Month', 'Target', 'NumberOfSales']]
+    else:
+        # Remove useless columns and select all the ones required.
+        # Implicit check that all the required columns are present.
+        df = df[required_attributes]
+        result = apply_BIP_submission_format(df)
+
     regions = get_regions()
 
     BIP_total_error = BIP_error(result, regions)
