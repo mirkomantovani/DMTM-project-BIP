@@ -17,6 +17,7 @@ def apply_BIP_submission_format(df, real_submit=False):
     :param real_submit: Whether the dataframe returned is for the real submit or not.
     :return: Dataframe in the submit format.
     """
+    import pandas as pd
     submission_features = ['StoreID', 'D_Month', 'NumberOfSales', '_NumberOfSales']
 
     if real_submit:
@@ -42,6 +43,8 @@ def apply_BIP_submission_format(df, real_submit=False):
     }
     # remove NumberOfSales renaming in case of real_submit
     if real_submit:
+        # let's round and cast to int
+        df['_NumberOfSales'] = pd.to_numeric(df['_NumberOfSales'].round(), downcast='integer')
         columns_renamings.pop('NumberOfSales')
 
     df.rename(index=str, inplace=True, columns=columns_renamings)
